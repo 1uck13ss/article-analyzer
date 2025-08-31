@@ -1,0 +1,22 @@
+services:
+  backend:
+    build: ./backend
+    container_name: article-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: article-frontend
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    environment:
+      - API_BASE=http://backend:8000/api
+    depends_on:
+      - backend
+    restart: unless-stopped
