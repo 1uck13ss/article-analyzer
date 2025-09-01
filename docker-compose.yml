@@ -1,6 +1,10 @@
 services:
   backend:
     build: ./backend
+    volumes:
+      - ./secrets/service-account-key.json:/app/backend/creds.json:ro
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/backend/creds.json
     container_name: article-backend
     ports:
       - "8000:8000"
@@ -16,7 +20,7 @@ services:
     env_file:
       - .env
     environment:
-      - API_BASE=http://backend:8000/api
+      - API_BASE=http://backend:8000
     depends_on:
       - backend
     restart: unless-stopped

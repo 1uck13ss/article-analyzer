@@ -1,0 +1,30 @@
+name: Test Workload Identity Impersonation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  test-access:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: 'projects/1057163559295/locations/global/workloadIdentityPools/github/providers/github-provider'
+          service_account: 'article-analyser@cosmic-shift-470014-h3.iam.gserviceaccount.com'
+
+      - name: Print Caller Identity
+        run: |
+          gcloud auth list
+          gcloud config list account
+
+      - name: Test GCS Access
+        run: |
+          gcloud storage ls gs://reading-tracker-submissions
