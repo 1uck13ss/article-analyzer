@@ -17,7 +17,7 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: 'projects/1057163559295/locations/global/workloadIdentityPools/github/providers/github-provider'
+          workload_identity_provider: 'projects/1057163559295/locations/global/workloadIdentityPools/github/providers/my-repo'
           service_account: 'article-analyser@cosmic-shift-470014-h3.iam.gserviceaccount.com'
 
       - name: Print Caller Identity
