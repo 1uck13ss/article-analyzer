@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-article-analyzer
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: app-backend:local
+        ports:
+        - containerPort: 8000
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /app/backend/creds.json
+        volumeMounts:
+        - name: gcp-creds
+          mountPath: /app/backend
+          readOnly: true
+      volumes:
+      - name: gcp-creds
+        secret:
+          secretName: gcp-creds
+          items:
+          - key: service-account-key.json
+            path: creds.json 
+

@@ -1,4 +1,6 @@
-# tests/test_ingest.py
+# to test, run this code
+# $env:PYTHONPATH="app/backend"; pytest app/test/ingestion_test.py
+
 from fastapi.testclient import TestClient
 from backend.main import app
 

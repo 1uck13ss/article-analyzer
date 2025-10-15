@@ -1,20 +1,20 @@
 services:
   backend:
     build: ./backend
-    volumes:
-      - ./secrets/service-account-key.json:/app/backend/creds.json:ro
-    environment:
-      - GOOGLE_APPLICATION_CREDENTIALS=/app/backend/creds.json
-    container_name: article-backend
+    container_name: backend
     ports:
       - "8000:8000"
     env_file:
       - .env
-    restart: unless-stopped
+    restart: unless-stopped    
+    volumes:
+      - ../secret-key/service-account-key.json:/app/backend/creds.json:ro
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/backend/creds.json
 
   frontend:
     build: ./frontend
-    container_name: article-frontend
+    container_name: frontend
     ports:
       - "8501:8501"
     env_file:

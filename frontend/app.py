@@ -3,7 +3,7 @@ import requests
 from components.article_card import render_article_card
 import os
 
-API_BASE = os.getenv("API_BASE", "http://localhost:8000")  
+API_BASE = "http://backend:8000"
 API_BASE += "/api"
 
 st.title("📚 Reading Tracker")

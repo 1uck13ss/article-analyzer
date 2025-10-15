@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: curl-debug
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: curl-debug
+  template:
+    metadata:
+      labels:
+        app: curl-debug
+    spec:
+      serviceAccountName: frontend-ksa
+      containers:
+      - name: curl
+        image: curlimages/curl
+        command: ["sleep", "3600"]
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi

@@ -12,6 +12,7 @@ spec:
       labels:
         app: backend
     spec:
+      serviceAccountName: frontend-ksa
       containers:
       - name: backend
         image: asia-southeast1-docker.pkg.dev/cosmic-shift-470014-h3/article/app-backend:v1
