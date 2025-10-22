@@ -1,0 +1,7 @@
+# frontend/.streamlit/config.toml
+
+[server]
+# Set this to the address the user types into the browser (http://localhost/)
+
+# Highly recommended: Ensure Streamlit binds to all interfaces inside the container
+address = "0.0.0.0"

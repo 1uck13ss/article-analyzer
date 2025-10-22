@@ -1,0 +1,16 @@
+apiVersion: cilium.io/v2
+kind: CiliumBGPClusterConfig
+metadata:
+  name: minikube-bgp-config
+spec:
+  nodeSelector:
+    matchLabels: {} #applies to all nodes in cluster
+  bgpInstances:
+    - name: main-instance
+      localASN: 64512
+      peers:
+        - name: external-peer
+          peerAddress: 192.168.0.10
+          peerASN: 65000
+          peerConfigRef:
+            name: minikube-external-peer

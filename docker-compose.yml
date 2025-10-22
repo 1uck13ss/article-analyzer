@@ -1,9 +1,10 @@
 services:
   backend:
     build: ./backend
+    image: docker-backend:latest
     container_name: backend
-    ports:
-      - "8000:8000"
+    expose:
+      - '8000'
     env_file:
       - .env
     restart: unless-stopped    
@@ -11,12 +12,15 @@ services:
       - ../secret-key/service-account-key.json:/app/backend/creds.json:ro
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/app/backend/creds.json
+    networks:
+      - app-network
 
   frontend:
     build: ./frontend
     container_name: frontend
-    ports:
-      - "8501:8501"
+    image: docker-frontend:latest
+    expose:
+      - '8501'
     env_file:
       - .env
     environment:
@@ -24,3 +28,22 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
+    networks:
+      - app-network
+
+  proxy:
+      image: nginx:latest
+      container_name: proxy
+      ports:
+        - "80:80"
+      networks:
+        - app-network
+      volumes:
+        - ../nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      depends_on:
+      - frontend
+      - backend
+
+networks:
+  app-network:
+    driver: bridge
